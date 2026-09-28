@@ -140,3 +140,7 @@ Use public or properly authorized sources. Keep original links, label AI-generat
 ## Project Status
 
 Sifti is an evolving product prototype and portfolio project. Feedback, implementation experiments, and thoughtful discussions are welcome.
+
+## Independence
+
+Sifti is an independent prototype created by Luceternity. It is not affiliated with, endorsed by, or an official product of Meta or the Muse platform.
