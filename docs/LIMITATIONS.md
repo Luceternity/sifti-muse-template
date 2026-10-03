@@ -37,6 +37,13 @@ Some providers require an initial published item before producing a valid RSS fe
 
 External podcast apps do not reliably report playback completion back to Sifti. After listening externally, the recipient must manually select **Mark as finished** in Sifti to keep the unfinished queue accurate.
 
+### Media-artifact handle trust is worker-scoped
+
+In environments that publish through a trusted media store, cover art and synthesized audio are referenced by trusted handles (e.g. `media-artifact:<uuid>`). A handle is only resolvable by the worker that minted it: reusing a handle in a later scheduled run — even inside the same pipeline, even a day later — fails at publish time when the store refuses to resolve the stale handle (observed errors: `resolve trusted podcast cover`, `resolve trusted podcast audio`).
+
+Operational rule: **mint cover art and audio inside the same worker run that publishes, every time.** Do not cache trusted handles across days or workers (e.g. do not mint one series cover and reuse its handle for every episode). If an episode must be published without new art, omit the cover rather than reusing a stale handle — the feed keeps its existing cover art.
+
+
 ## 5. Audio Generation
 
 Natural narrated audio depends on an available TTS service and supported voice options. Voice names, quality, duration limits, quotas, and availability may differ by environment.
